@@ -1,0 +1,32 @@
+﻿@using Radzen
+@using Radzen.Blazor.Rendering
+@* @namespace *@
+@* class=@IconClassList *@
+@implements IDisposable
+@{
+    var itemArgs = Tree?.ItemAttributes(this);
+}
+<li class="rz-treenode" @attributes="@(itemArgs.Item1.Attributes.Any() ? itemArgs.Item1.Attributes : Attributes)">
+    <div class=@ContentClassList @onclick="@Select" @ondblclick="@(e => {if (ChildContent != null || HasChildren) Toggle();})">
+      @*   @if (ChildContent != null || HasChildren)
+        {
+            <span  @ondblclick="@Toggle" @onclick:stopPropagation></span>
+        } *@
+        @if (Template != null)
+        {
+            <div class="rz-treenode-label" @onkeydown:stopPropagation>@Template(this)</div>
+        }
+        else
+        {
+            <label for="@(GetHashCode())" class="rz-treenode-label">@Text</label>
+        }
+    </div>
+    @if (ChildContent != null && expanded)
+    {
+        <CascadingValue Value=this>
+            <ul class="rz-treenode-children" style=@(clientExpanded ? "" : "display:none;") @onkeydown:stopPropagation>
+                @ChildContent
+            </ul>
+        </CascadingValue>
+    }
+</li>
