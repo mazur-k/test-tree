@@ -4,12 +4,12 @@
     {
         //
         // Summary:
-        //     Gets the AthenaTreeItem.Text the expanded AthenaTreeItem.
+        //     Gets the AthenaTreeItem.Value the expanded AthenaTreeItem.
         public object Value { get; set; }
 
         //
         // Summary:
-        //     Gets the AthenaTreeItem.Value the expanded AthenaTreeItem.
+        //     Gets the AthenaTreeItem.Text the expanded AthenaTreeItem.
         public string Text { get; set; }
 
         //

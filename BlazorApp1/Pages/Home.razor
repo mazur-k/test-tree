@@ -1,16 +1,17 @@
 ﻿@using BlazorApp1.Components
+@using BlazorApp1.Helper
 @page "/"
 
-<PageTitle>Home</PageTitle>
+@* <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<RadzenButton Click="@ButtonClicked" Text="Hi"></RadzenButton>
+<RadzenButton Click="@ButtonClicked" Text="Hi"></RadzenButton> *@
 
 
-<RadzenCard class="rz-my-12 rz-mx-auto" style="max-width: 400px;">
+@* <RadzenCard class="rz-my-12 rz-mx-auto" style="max-width: 400px;">
     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Inline definition</RadzenText>
     <RadzenTree Expand=@OnExpand Collapse=@OnCollapse Change=@OnChange Style="width: 100%; height: 300px">
         <RadzenTreeItem Text="BMW">
@@ -44,9 +45,9 @@ Welcome to your new app.
             </ChildContent>
         </RadzenTreeItem>
     </RadzenTree>
-</RadzenCard>
+</RadzenCard> *@
 
-<RadzenCard class="rz-my-12 rz-mx-auto" style="max-width: 400px;">
+@* <RadzenCard class="rz-my-12 rz-mx-auto" style="max-width: 400px;">
     <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Inline definition</RadzenText>
     <AthenaTree Expand=@OnExpandAthena Collapse=@OnCollapse Change=@OnChange Style="width: 100%; height: 300px">
         <AthenaTreeItem Text="BMW">
@@ -101,9 +102,19 @@ Welcome to your new app.
             </ChildContent>
         </AthenaTreeItem>
     </AthenaTree>
+</RadzenCard> *@
+
+<RadzenCard class="rz-my-12 rz-mx-auto" style="max-width: 400px;">
+    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Inline definition</RadzenText>
+    <AthenaTree Data=@items Expand=@OnExpandAthena Collapse=@OnCollapse Change=@OnChange Style="width: 100%; height: 300px">
+        <AthenaTreeLevel TextProperty="@nameof(Item.Name)" ChildrenProperty="@nameof(Item.Children)" />
+    </AthenaTree>
 </RadzenCard>
 
 @code {
+    IEnumerable<Item> items;
+
+
     void ButtonClicked()
     {
         // Handle the Click event of RadzenButton
@@ -126,5 +137,33 @@ Welcome to your new app.
     void OnCollapse(TreeEventArgs args)
     {
         // Log("Collapse", $"Text: {args.Text}");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var item1 = new Item();
+        item1.Children = new List<Item> {
+            new Item("item2", new List<Item> {
+                new Item("item3", new List<Item>
+                {
+                    new Item("item4", new List<Item>
+                    {
+                        new Item("item5", new List<Item>())
+                    })
+                })}),
+            new Item("item6", new List<Item>()),
+            new Item("item7", new List<Item>())
+        };
+        item1.Name = "item1";
+
+        items = new List<Item>
+        {
+            item1,
+            new Item("item8", new List<Item>()),
+            new Item("item9", new List<Item>()),
+            new Item("item10", new List<Item>())
+        };
     }
 }

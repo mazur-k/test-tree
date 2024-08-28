@@ -2,7 +2,7 @@
 
 namespace BlazorApp1.Components
 {
-    public class AthenaTreeLevel
+    public partial class AthenaTreeLevel : ComponentBase
     {
         /// <summary>
         /// Specifies the name of the property which provides values for the <see cref="AthenaTreeItem.Text" /> property of the child items.
