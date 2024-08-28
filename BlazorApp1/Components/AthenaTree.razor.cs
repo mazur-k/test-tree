@@ -139,41 +139,46 @@ namespace BlazorApp1.Components
 
         RenderFragment RenderChildren(IEnumerable children, int depth)
         {
+            var maxDepth = 2;
+
             var level = depth < Levels.Count() ? Levels.ElementAt(depth) : Levels.Last();
 
             return new RenderFragment(builder =>
             {
-                Func<object, string> text = null;
-
-                foreach (var data in children)
+                if (depth <= maxDepth)
                 {
-                    if (text == null)
+                    Func<object, string> text = null;
+
+                    foreach (var data in children)
                     {
-                        text = level.Text ??
-                            (!string.IsNullOrEmpty(level.TextProperty) ? Getter<string>(data, level.TextProperty) : null) ??
-                            (o => "");
-                    }
-
-                    RenderTreeItem(builder, data, level.Template, text, level.HasChildren, level.Expanded, level.Selected);
-
-                    var hasChildren = level.HasChildren(data);
-
-                    if (!string.IsNullOrEmpty(level.ChildrenProperty))
-                    {
-                        var grandChildren = PropertyAccess.GetValue(data, level.ChildrenProperty) as IEnumerable;
-
-                        if (grandChildren != null && hasChildren)
+                        if (text == null)
                         {
-                            builder.AddAttribute(7, "ChildContent", RenderChildren(grandChildren, depth + 1));
-                            builder.AddAttribute(8, nameof(AthenaTreeItem.Data), grandChildren);
+                            text = level.Text ??
+                                (!string.IsNullOrEmpty(level.TextProperty) ? Getter<string>(data, level.TextProperty) : null) ??
+                                (o => "");
                         }
-                        else
-                        {
-                            builder.AddAttribute(7, "ChildContent", (RenderFragment)null);
-                        }
-                    }
 
-                    builder.CloseComponent();
+                        RenderTreeItem(builder, data, level.Template, text, level.HasChildren, level.Expanded, level.Selected);
+
+                        var hasChildren = level.HasChildren(data);
+
+                        if (!string.IsNullOrEmpty(level.ChildrenProperty))
+                        {
+                            var grandChildren = PropertyAccess.GetValue(data, level.ChildrenProperty) as IEnumerable;
+
+                            if (grandChildren != null && hasChildren)
+                            {
+                                builder.AddAttribute(7, "ChildContent", RenderChildren(grandChildren, depth + 1));
+                                builder.AddAttribute(8, nameof(AthenaTreeItem.Data), grandChildren);
+                            }
+                            else
+                            {
+                                builder.AddAttribute(7, "ChildContent", (RenderFragment)null);
+                            }
+                        }
+
+                        builder.CloseComponent();
+                    }
                 }
             });
         }
