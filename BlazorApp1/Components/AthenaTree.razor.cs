@@ -8,6 +8,13 @@ namespace BlazorApp1.Components
 {
     public partial class AthenaTree : RadzenComponent
     {
+        [Inject]
+        public required IApplicationService ApplicationService
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Gets or sets the open button aria-label attribute.
         /// </summary>
