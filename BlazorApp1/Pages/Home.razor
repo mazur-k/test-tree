@@ -131,13 +131,6 @@ Welcome to your new app.
 
     void OnExpandAthena(AthenaTreeExpandEventArgs args)
     {
-        var directory = args.Value as string;
-
-        args.Children.Data = Directory.EnumerateFileSystemEntries(directory);
-        args.Children.Text = GetTextForNode;
-        args.Children.HasChildren = (path) => Directory.Exists((string)path);
-        args.Children.Template = FileOrFolderTemplate;
-        args.Children.Checkable = o => false;
         // Log("Expand", $"Text: {args.Text}");
     }
 

@@ -9,7 +9,7 @@ namespace BlazorApp1.Components
     public partial class AthenaTree : RadzenComponent
     {
         [Inject]
-        public required IApplicationService ApplicationService
+        public required IDataService DataService
         {
             get;
             set;
