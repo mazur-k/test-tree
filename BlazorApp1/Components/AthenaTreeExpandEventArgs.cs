@@ -1,7 +1,10 @@
-﻿    namespace BlazorApp1.Components
+﻿using Microsoft.AspNetCore.Components;
+
+namespace BlazorApp1.Components
 {
     public class AthenaTreeExpandEventArgs
     {
+        public RenderFragment<AthenaTreeItem> Template { get; set; }
         //
         // Summary:
         //     Gets the AthenaTreeItem.Value the expanded AthenaTreeItem.

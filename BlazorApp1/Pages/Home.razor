@@ -132,6 +132,7 @@ Welcome to your new app.
 
     async Task OnExpandAthena(AthenaTreeExpandEventArgs args)
     {
+        var item = args.Value as Item;
         var data = await DataService.GetChildrenAsync("test", CancellationToken.None);
         // Log("Expand", $"Text: {args.Text}");
     }
