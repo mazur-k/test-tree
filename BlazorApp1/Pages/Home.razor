@@ -152,7 +152,7 @@ Welcome to your new app.
     {
         var item = args.Value as Item;
         var data = await DataService.GetChildrenAsync("test", CancellationToken.None);
-
+        item.Children = data.ToList<Item>();
         args.Children.Data = data;
         args.Children.Template = FileOrFolderTemplate;
         args.Children.Text = t => "test";
@@ -191,5 +191,12 @@ Welcome to your new app.
             new Item("item3", "file", new List<Item>()),
             new Item("item4", "file", new List<Item>())
         };
+        // items = new List<Item>
+        // {
+        //     item1,
+        //     new Item("item2", "file", new List<Item>()),
+        //     new Item("item3", "file", new List<Item>()),
+        //     new Item("item4", "file", new List<Item>())
+        // };
     }
 }
