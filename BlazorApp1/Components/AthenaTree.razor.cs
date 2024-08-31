@@ -236,7 +236,7 @@ namespace BlazorApp1.Components
                 var childContent = new RenderFragment(builder =>
                 {
                     Func<object, string> text = null;
-                    Func<object, bool> checkable = null;
+
                     var children = args.Children;
 
                     foreach (var data in children.Data)
@@ -293,6 +293,7 @@ namespace BlazorApp1.Components
         internal int focusedIndex = -1;
 
         bool preventKeyPress = true;
+
         async Task OnKeyPress(KeyboardEventArgs args)
         {
             var key = args.Code != null ? args.Code : args.Key;

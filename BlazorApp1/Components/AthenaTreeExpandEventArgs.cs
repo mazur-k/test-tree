@@ -4,7 +4,10 @@ namespace BlazorApp1.Components
 {
     public class AthenaTreeExpandEventArgs
     {
+        //new
         public RenderFragment<AthenaTreeItem> Template { get; set; }
+
+
         //
         // Summary:
         //     Gets the AthenaTreeItem.Value the expanded AthenaTreeItem.

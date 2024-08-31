@@ -131,13 +131,19 @@ Welcome to your new app.
 
     RenderFragment<AthenaTreeItem> FileOrFolderTemplate = (context) => builder =>
     {
-        // string path = context.Value as string;
-        // bool isDirectory = Directory.Exists(path);
 
         bool isDirectory = (context.Value as Item).Type.Equals("folder");
 
         builder.OpenComponent<RadzenIcon>(0);
-        builder.AddAttribute(1, nameof(RadzenIcon.Icon), isDirectory ? "folder" : "insert_drive_file");
+        if (context.Loading)
+        {
+            builder.AddAttribute(1, nameof(RadzenIcon.Icon), "hourglass_full");
+        }
+        else
+        {
+            builder.AddAttribute(1, nameof(RadzenIcon.Icon), isDirectory ? "folder" : "insert_drive_file");
+        }
+
         builder.CloseComponent();
         builder.AddContent(3, context.Text);
     };
@@ -146,6 +152,10 @@ Welcome to your new app.
     {
         var item = args.Value as Item;
         var data = await DataService.GetChildrenAsync("test", CancellationToken.None);
+
+        args.Children.Data = data;
+        args.Children.Template = FileOrFolderTemplate;
+        args.Children.Text = t => "test";
         // Log("Expand", $"Text: {args.Text}");
     }
 
@@ -158,28 +168,28 @@ Welcome to your new app.
     {
         await base.OnInitializedAsync();
 
-        var item1 = new Item();
-        item1.Children = new List<Item> {
-            new Item("item2", "folder", new List<Item> {
-                new Item("item3", "folder", new List<Item>
-                {
-                    new Item("item4", "folder",new List<Item>
-                    {
-                        new Item("item5", "file", new List<Item>())
-                    })
-                })}),
-            new Item("item6", "file", new List<Item>()),
-            new Item("item7", "file", new List<Item>())
-        };
-        item1.Name = "item1";
-        item1.Type = "folder";
+        // var item1 = new Item();
+        // item1.Children = new List<Item> {
+        //     new Item("item2", "folder", new List<Item> {
+        //         new Item("item3", "folder", new List<Item>
+        //         {
+        //             new Item("item4", "folder",new List<Item>
+        //             {
+        //                 new Item("item5", "file", new List<Item>())
+        //             })
+        //         })}),
+        //     new Item("item6", "file", new List<Item>()),
+        //     new Item("item7", "file", new List<Item>())
+        // };
+        // item1.Name = "item1";
+        // item1.Type = "folder";
 
         items = new List<Item>
         {
-            item1,
-            new Item("item8", "file", new List<Item>()),
-            new Item("item9", "file", new List<Item>()),
-            new Item("item10", "file", new List<Item>())
+            new Item("item1", "folder", new List<Item>()),
+            new Item("item2", "file", new List<Item>()),
+            new Item("item3", "file", new List<Item>()),
+            new Item("item4", "file", new List<Item>())
         };
     }
 }

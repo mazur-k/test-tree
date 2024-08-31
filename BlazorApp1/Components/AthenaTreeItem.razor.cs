@@ -40,12 +40,6 @@ namespace BlazorApp1.Components
         [Parameter]
         public string Text { get; set; }
 
-        /// <summary>
-        /// Gets or sets value indicating if the tree item checkbox can be checked.
-        /// </summary>
-        [Parameter]
-        public bool Checkable { get; set; } = true;
-
         private bool expanded;
 
         /// <summary>
@@ -74,14 +68,17 @@ namespace BlazorApp1.Components
         [Parameter]
         public bool Selected { get; set; }
 
+        [Parameter]
+        public bool Loading { get; set; }
+
         /// <summary>
-        /// The RadzenTree which this item is part of.
+        /// The AthenaTree which this item is part of.
         /// </summary>
         [CascadingParameter]
         public AthenaTree Tree { get; set; }
 
         /// <summary>
-        /// The RadzenTreeItem which contains this item.
+        /// The AthenaTreeItem which contains this item.
         /// </summary>
         [CascadingParameter]
         public AthenaTreeItem ParentItem { get; set; }
