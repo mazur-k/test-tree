@@ -165,23 +165,30 @@ namespace BlazorApp1.Components
                                 (o => "");
                         }
 
-                        RenderTreeItem(builder, data, level.Template, text, level.HasChildren, level.Expanded, level.Selected);
-
-                        var hasChildren = level.HasChildren(data);
-
-                        if (!string.IsNullOrEmpty(level.ChildrenProperty))
+                        if(depth < 2)
                         {
-                            var grandChildren = PropertyAccess.GetValue(data, level.ChildrenProperty) as IEnumerable;
+                            RenderTreeItem(builder, data, level.Template, text, level.HasChildren, level.Expanded, level.Selected);
 
-                            if (grandChildren != null && hasChildren)
+                            var hasChildren = level.HasChildren(data);
+
+                            if (!string.IsNullOrEmpty(level.ChildrenProperty))
                             {
-                                builder.AddAttribute(7, "ChildContent", RenderChildren(grandChildren, depth + 1));
-                                builder.AddAttribute(8, nameof(AthenaTreeItem.Data), grandChildren);
-                            }
-                            else
-                            {
-                                builder.AddAttribute(7, "ChildContent", (RenderFragment)null);
-                            }
+                                var grandChildren = PropertyAccess.GetValue(data, level.ChildrenProperty) as IEnumerable;
+
+                                if (grandChildren != null && hasChildren)
+                                {
+                                    builder.AddAttribute(7, "ChildContent", RenderChildren(grandChildren, depth + 1));
+                                    builder.AddAttribute(8, nameof(AthenaTreeItem.Data), grandChildren);
+                                }
+                                else
+                                {
+                                    builder.AddAttribute(7, "ChildContent", (RenderFragment)null);
+                                }
+                            } 
+                        }
+                        else
+                        {
+                            RenderTreeItem(builder, data, level.Template, text, e => false, level.Expanded, level.Selected);
                         }
 
                         builder.CloseComponent();

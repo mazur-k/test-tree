@@ -69,7 +69,10 @@ namespace BlazorApp1.Components
         public bool Selected { get; set; }
 
         [Parameter]
-        public bool Loading { get; set; }
+        public bool IsLoading { get; set; }
+
+        [Parameter]
+        public bool IsLoaded { get; set; } = false;
 
         /// <summary>
         /// The AthenaTree which this item is part of.
@@ -90,7 +93,12 @@ namespace BlazorApp1.Components
         public IEnumerable Data { get; set; }
 
         public void StartLoading(bool isLoading) { 
-            Loading = isLoading;
+            IsLoading = isLoading;
+        }
+
+        public void SetLoaded(bool isLoaded)
+        {
+            IsLoaded = isLoaded;
         }
 
         internal List<AthenaTreeItem> items = new List<AthenaTreeItem>();

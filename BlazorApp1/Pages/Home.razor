@@ -136,7 +136,7 @@ Welcome to your new app.
 
         builder.OpenComponent<RadzenIcon>(0);
 
-        if (context.Loading)
+        if (context.IsLoading)
         {
             builder.AddAttribute(1, nameof(RadzenIcon.Icon), "hourglass_full");
         }
@@ -151,18 +151,23 @@ Welcome to your new app.
 
     async Task OnExpandAthena(AthenaTreeExpandEventArgs args)
     {
-        args.TargetNode.StartLoading(true);
+        if (!args.TargetNode.IsLoaded && args.TargetNode.HasChildren)
+        {
+            args.TargetNode.StartLoading(true);
 
-        var item = args.Value as Item;
-        var data = await DataService.GetChildrenAsync("test", CancellationToken.None).ConfigureAwait(false);
+            var item = args.Value as Item;
+            var data = await DataService.GetChildrenAsync("test", CancellationToken.None).ConfigureAwait(false);
 
-        args.TargetNode.StartLoading(false);
+            args.TargetNode.StartLoading(false);
+            args.TargetNode.SetLoaded(true);
 
-        item.Children = data.ToList<Item>();
+            item.Children = data.ToList<Item>();
 
-        args.Children.Data = data;
-        args.Children.Template = FileOrFolderTemplate;
-        args.Children.Text = t => "test";
+            args.Children.Data = data;
+            args.Children.Template = FileOrFolderTemplate;
+            args.Children.Text = t => "test";
+        }
+
         // Log("Expand", $"Text: {args.Text}");
     }
 
