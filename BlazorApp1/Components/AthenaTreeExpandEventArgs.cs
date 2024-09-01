@@ -5,18 +5,18 @@ namespace BlazorApp1.Components
     public class AthenaTreeExpandEventArgs
     {
         //new
-        public RenderFragment<AthenaTreeItem> Template { get; set; }
+        public RenderFragment<AthenaTreeItem>? Template { get; set; }
 
 
         //
         // Summary:
         //     Gets the AthenaTreeItem.Value the expanded AthenaTreeItem.
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
         //
         // Summary:
         //     Gets the AthenaTreeItem.Text the expanded AthenaTreeItem.
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         //
         // Summary:
@@ -24,8 +24,8 @@ namespace BlazorApp1.Components
         //
         // Value:
         //     The children.
-        public AthenaTreeItemSettings Children { get; set; }
+        public AthenaTreeItemSettings? Children { get; set; }
 
-        public AthenaTreeItem TargetNode { get; set; }
+        public AthenaTreeItem? TargetNode { get; set; }
     }
 }

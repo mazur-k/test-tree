@@ -299,7 +299,7 @@ namespace BlazorApp1.Components
             await base.SetParametersAsync(parameters);
         }
 
-        internal IEnumerable<object> GetAllChildValues(Func<object, bool> predicate = null)
+        internal IEnumerable<object> GetAllChildValues(Func<object, bool>? predicate = null)
         {
             var children = items.Concat(items.SelectManyRecursive(i => i.items)).Select(i => i.Value);
 

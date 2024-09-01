@@ -27,7 +27,7 @@ namespace BlazorApp1.Components
             return "rz-tree";
         }
 
-        internal AthenaTreeItem SelectedItem { get; private set; }
+        internal AthenaTreeItem? SelectedItem { get; private set; }
 
         IList<AthenaTreeLevel> Levels { get; set; } = new List<AthenaTreeLevel>(3);
 
@@ -75,7 +75,7 @@ namespace BlazorApp1.Components
         /// A callback that will be invoked when item is rendered.
         /// </summary>
         [Parameter]
-        public Action<AthenaTreeItemRenderEventArgs> ItemRender { get; set; }
+        public Action<AthenaTreeItemRenderEventArgs>? ItemRender { get; set; }
 
         internal Tuple<AthenaTreeItemRenderEventArgs, IReadOnlyDictionary<string, object>> ItemAttributes(AthenaTreeItem item)
         {
@@ -94,19 +94,19 @@ namespace BlazorApp1.Components
         /// </summary>
         /// <value>The child content.</value>
         [Parameter]
-        public RenderFragment ChildContent { get; set; }
+        public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
         /// Specifies the collection of data items which RadzenTree will create its items from.
         /// </summary>
         [Parameter]
-        public IEnumerable Data { get; set; }
+        public IEnumerable? Data { get; set; }
 
         /// <summary>
         /// Specifies the selected value. Use with <c>@bind-Value</c> to sync it with a property.
         /// </summary>
         [Parameter]
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
         /// <summary>
         /// A callback which will be invoked when <see cref="Value" /> changes.
@@ -154,7 +154,7 @@ namespace BlazorApp1.Components
             {
                 if (depth <= maxDepth)
                 {
-                    Func<object, string> text = null;
+                    Func<object, string>? text = null;
 
                     foreach (var data in children)
                     {
@@ -182,7 +182,7 @@ namespace BlazorApp1.Components
                                 }
                                 else
                                 {
-                                    builder.AddAttribute(7, "ChildContent", (RenderFragment)null);
+                                    builder.AddAttribute(7, "ChildContent", (RenderFragment?)null);
                                 }
                             } 
                         }
@@ -227,7 +227,7 @@ namespace BlazorApp1.Components
             SelectedItem?.Unselect();
             SelectedItem = null;
         }
-        internal async Task ExpandItem(AthenaTreeItem item)
+        internal async Task ExpandItem(AthenaTreeItem? item)
         {
             var args = new AthenaTreeExpandEventArgs()
             {
@@ -243,7 +243,7 @@ namespace BlazorApp1.Components
             {
                 var childContent = new RenderFragment(builder =>
                 {
-                    Func<object, string> text = null;
+                    Func<object, string>? text = null;
 
                     var children = args.Children;
 
@@ -259,7 +259,7 @@ namespace BlazorApp1.Components
                     }
                 });
 
-                item.RenderChildContent(childContent);
+                item?.RenderChildContent(childContent);
             }
         }
 

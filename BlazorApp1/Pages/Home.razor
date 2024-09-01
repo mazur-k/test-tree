@@ -155,7 +155,7 @@ Welcome to your new app.
         {
             args.TargetNode.StartLoading(true);
 
-            var item = args.Value as Item;
+            var item = (Item)args.Value;
             var data = await DataService.GetChildrenAsync("test", CancellationToken.None).ConfigureAwait(false);
 
             args.TargetNode.StartLoading(false);
