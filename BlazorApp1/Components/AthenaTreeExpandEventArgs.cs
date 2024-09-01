@@ -25,5 +25,7 @@ namespace BlazorApp1.Components
         // Value:
         //     The children.
         public AthenaTreeItemSettings Children { get; set; }
+
+        public AthenaTreeItem TargetNode { get; set; }
     }
 }

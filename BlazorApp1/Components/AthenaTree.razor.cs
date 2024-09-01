@@ -226,7 +226,8 @@ namespace BlazorApp1.Components
             {
                 Text = item?.Text,
                 Value = item?.Value,
-                Children = new AthenaTreeItemSettings()
+                Children = new AthenaTreeItemSettings(),
+                TargetNode = item,
             };
 
             await Expand.InvokeAsync(args);

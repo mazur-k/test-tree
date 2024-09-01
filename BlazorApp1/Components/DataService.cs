@@ -4,7 +4,7 @@ namespace BlazorApp1.Components
 {
     public class DataService : IDataService
     {
-        public Task<IEnumerable<Item>> GetChildrenAsync(string parameter, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Item>> GetChildrenAsync(string parameter, CancellationToken cancellationToken)
         {
             //    var item1 = new Item();
             //    item1.Children = new List<Item> {
@@ -36,7 +36,9 @@ namespace BlazorApp1.Components
                 new Item("item10", "file", new List<Item>())
             };
 
-            return Task.FromResult<IEnumerable<Item>>(items);
+            await Task.Delay(2000);
+
+            return await Task.FromResult<IEnumerable<Item>>(items);
         }
     }
 }

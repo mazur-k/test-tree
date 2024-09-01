@@ -89,6 +89,10 @@ namespace BlazorApp1.Components
         [Parameter]
         public IEnumerable Data { get; set; }
 
+        public void StartLoading(bool isLoading) { 
+            Loading = isLoading;
+        }
+
         internal List<AthenaTreeItem> items = new List<AthenaTreeItem>();
 
         internal void AddItem(AthenaTreeItem item)
