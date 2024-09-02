@@ -112,7 +112,7 @@ Welcome to your new app.
 </RadzenCard>
 
 @code {
-    IEnumerable<Item> items;
+    IEnumerable<Item>? items;
 
 
     void ButtonClicked()
@@ -131,27 +131,29 @@ Welcome to your new app.
 
     RenderFragment<AthenaTreeItem> FileOrFolderTemplate = (context) => builder =>
     {
-
-        bool isDirectory = (context.Value as Item).Type.Equals("folder");
-
-        builder.OpenComponent<RadzenIcon>(0);
-
-        if (context.IsLoading)
+        if (context.Value is not null)
         {
-            builder.AddAttribute(1, nameof(RadzenIcon.Icon), "hourglass_full");
-        }
-        else
-        {
-            builder.AddAttribute(1, nameof(RadzenIcon.Icon), isDirectory ? "folder" : "insert_drive_file");
-        }
+            bool isDirectory = ((Item)context.Value).Type.Equals("folder");
 
-        builder.CloseComponent();
-        builder.AddContent(3, context.Text);
+            builder.OpenComponent<RadzenIcon>(0);
+
+            if (context.IsLoading)
+            {
+                builder.AddAttribute(1, nameof(RadzenIcon.Icon), "hourglass_full");
+            }
+            else
+            {
+                builder.AddAttribute(1, nameof(RadzenIcon.Icon), isDirectory ? "folder" : "insert_drive_file");
+            }
+
+            builder.CloseComponent();
+            builder.AddContent(3, context.Text);
+        }
     };
 
     async Task OnExpandAthena(AthenaTreeExpandEventArgs args)
     {
-        if (!args.TargetNode.IsLoaded && args.TargetNode.HasChildren)
+        if (args.Value is not null && args.TargetNode is not null && !args.TargetNode.IsLoaded && args.TargetNode.HasChildren)
         {
             args.TargetNode.StartLoading(true);
 
@@ -163,9 +165,12 @@ Welcome to your new app.
 
             item.Children = data.ToList<Item>();
 
-            args.Children.Data = data;
-            args.Children.Template = FileOrFolderTemplate;
-            args.Children.Text = t => "test";
+            if (args.Children is not null)
+            {
+                args.Children.Data = data;
+                args.Children.Template = FileOrFolderTemplate;
+                args.Children.Text = t => "test";
+            }
         }
 
         // Log("Expand", $"Text: {args.Text}");
