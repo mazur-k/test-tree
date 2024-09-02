@@ -12,7 +12,7 @@ namespace BlazorApp1.Components
         /// </summary>
         /// <value>The attributes.</value>
         [Parameter(CaptureUnmatchedValues = true)]
-        public IReadOnlyDictionary<string, object> Attributes { get; set; }
+        public IReadOnlyDictionary<string, object>? Attributes { get; set; }
 
         ClassList ContentClassList => ClassList.Create("rz-treenode-content")
                                                .Add("rz-treenode-content-selected", selected)
@@ -26,19 +26,19 @@ namespace BlazorApp1.Components
         /// </summary>
         /// <value>The child content.</value>
         [Parameter]
-        public RenderFragment ChildContent { get; set; }
+        public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
         /// Gets or sets the template. Use it to customize the appearance of a tree item.
         /// </summary>
         [Parameter]
-        public RenderFragment<AthenaTreeItem> Template { get; set; }
+        public RenderFragment<AthenaTreeItem>? Template { get; set; }
 
         /// <summary>
         /// Gets or sets the text displayed by the tree item.
         /// </summary>
         [Parameter]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         private bool expanded;
 
@@ -52,7 +52,7 @@ namespace BlazorApp1.Components
         /// Gets or sets the value of the tree item.
         /// </summary>
         [Parameter]
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance has children.
@@ -78,19 +78,19 @@ namespace BlazorApp1.Components
         /// The AthenaTree which this item is part of.
         /// </summary>
         [CascadingParameter]
-        public AthenaTree Tree { get; set; }
+        public AthenaTree? Tree { get; set; }
 
         /// <summary>
         /// The AthenaTreeItem which contains this item.
         /// </summary>
         [CascadingParameter]
-        public AthenaTreeItem ParentItem { get; set; }
+        public AthenaTreeItem? ParentItem { get; set; }
 
         /// <summary>
         /// The children data.
         /// </summary>
         [Parameter]
-        public IEnumerable Data { get; set; }
+        public IEnumerable? Data { get; set; }
 
         public void StartLoading(bool isLoading) { 
             IsLoading = isLoading;
@@ -147,7 +147,7 @@ namespace BlazorApp1.Components
                 {
                     if (items.Count > 0)
                     {
-                        Tree.RemoveFromCurrentItems(Tree.CurrentItems.IndexOf(items[0]), items.Count);
+                        Tree?.RemoveFromCurrentItems(Tree.CurrentItems.IndexOf(items[0]), items.Count);
                     }
 
                     if (Tree != null)
@@ -185,7 +185,7 @@ namespace BlazorApp1.Components
             {
                 if (items.Count > 0)
                 {
-                    Tree.RemoveFromCurrentItems(Tree.CurrentItems.IndexOf(items[0]), items.Count);
+                    Tree?.RemoveFromCurrentItems(Tree.CurrentItems.IndexOf(items[0]), items.Count);
                 }
 
                 if (Tree != null)
@@ -232,14 +232,21 @@ namespace BlazorApp1.Components
 
             if (expanded)
             {
-                await Tree?.ExpandItem(this);
+                if (Tree is not null)
+                {
+                    await Tree.ExpandItem(this);
+                }
+                
             }
 
             selected = Selected;
 
             if (selected)
             {
-                await Tree?.SelectItem(this);
+                if (Tree is not null)
+                {
+                    await Tree.SelectItem(this);
+                }
             }
 
             if (Tree != null && ParentItem == null)
@@ -251,9 +258,12 @@ namespace BlazorApp1.Components
             {
                 ParentItem.AddItem(this);
 
-                var currentItems = Tree.items;
+                if (Tree is not null)
+                {
+                    var currentItems = Tree.items;
 
-                Tree.InsertInCurrentItems(currentItems.IndexOf(ParentItem) + (ParentItem != null ? ParentItem.items.Count : 0), this);
+                    Tree.InsertInCurrentItems(currentItems.IndexOf(ParentItem) + (ParentItem != null ? ParentItem.items.Count : 0), this);
+                }
             }
         }
 
@@ -299,16 +309,26 @@ namespace BlazorApp1.Components
             await base.SetParametersAsync(parameters);
         }
 
-        internal IEnumerable<object> GetAllChildValues(Func<object, bool>? predicate = null)
+        internal IEnumerable<object?>? GetAllChildValues(Func<object?, bool>? predicate = null)
         {
             var children = items.Concat(items.SelectManyRecursive(i => i.items)).Select(i => i.Value);
 
             return predicate != null ? children.Where(predicate) : children;
         }
 
-        IEnumerable<object> GetValueAndAllChildValues()
+        IEnumerable<object?> GetValueAndAllChildValues()
         {
-            return new object[] { Value }.Concat(GetAllChildValues());
+            var children = GetAllChildValues();
+            var result = new object?[] { Value };
+
+            if(children is not null)
+            {
+                var concatResult = result.Concat(children);
+                return concatResult;
+            }
+
+            return result;
+            //return new object?[] { Value }.Concat(GetAllChildValues());
         }
 
         internal bool Contains(AthenaTreeItem child)

@@ -38,30 +38,6 @@ namespace BlazorApp1.Components
         /// <summary>
         /// A callback that will be invoked when the user expands an item.
         /// </summary>
-        /// <example>
-        /// <code>
-        /// &lt;RadzenTree Expand=@OnExpand&gt;
-        ///     &lt;RadzenTreeItem Text="BMW"&gt;
-        ///         &lt;RadzenTreeItem Text="M3" /&gt;
-        ///         &lt;RadzenTreeItem Text="M5" /&gt;
-        ///     &lt;/RadzenTreeItem&gt;
-        ///     &lt;RadzenTreeItem Text="Audi"&gt;
-        ///         &lt;RadzenTreeItem Text="RS4" /&gt;
-        ///         &lt;RadzenTreeItem Text="RS6" /&gt;
-        ///     &lt;/RadzenTreeItem&gt;
-        ///     &lt;RadzenTreeItem Text="Mercedes"&gt;
-        ///         &lt;RadzenTreeItem Text="C63 AMG" /&gt;
-        ///         &lt;RadzenTreeItem Text="S63 AMG" /&gt;
-        ///     &lt;/RadzenTreeItem&gt;
-        /// &lt;/RadzenTree&gt;
-        /// @code {
-        ///   void OnExpand(TreeExpandEventArgs args) 
-        ///   {
-        /// 
-        ///   }
-        /// }
-        /// </code>
-        /// </example>
         [Parameter]
         public EventCallback<AthenaTreeExpandEventArgs> Expand { get; set; }
 
@@ -132,7 +108,7 @@ namespace BlazorApp1.Components
             }
         }
 
-        void RenderTreeItem(RenderTreeBuilder builder, object data, RenderFragment<AthenaTreeItem> template, Func<object, string> text, Func<object, bool> hasChildren, Func<object, bool> expanded, Func<object, bool> selected, IEnumerable children = null)
+        void RenderTreeItem(RenderTreeBuilder builder, object data, RenderFragment<AthenaTreeItem> template, Func<object, string> text, Func<object, bool> hasChildren, Func<object, bool> expanded, Func<object, bool> selected, IEnumerable? children = null)
         {
             builder.OpenComponent<AthenaTreeItem>(0);
             builder.AddAttribute(1, nameof(AthenaTreeItem.Text), text(data));
@@ -227,6 +203,7 @@ namespace BlazorApp1.Components
             SelectedItem?.Unselect();
             SelectedItem = null;
         }
+
         internal async Task ExpandItem(AthenaTreeItem? item)
         {
             var args = new AthenaTreeExpandEventArgs()
@@ -367,7 +344,8 @@ namespace BlazorApp1.Components
             }
         }
 
-        List<AthenaTreeItem> _currentItems;
+        List<AthenaTreeItem>? _currentItems;
+
         internal List<AthenaTreeItem> CurrentItems
         {
             get

@@ -12,11 +12,11 @@ namespace BlazorApp1.Components
         //
         // Summary:
         //     Gets tree item.
-        public object Value { get; internal set; }
+        public object? Value { get; internal set; }
 
         //
         // Summary:
         //     Gets child items.
-        public IEnumerable Data { get; internal set; }
+        public IEnumerable? Data { get; internal set; }
     }
 }

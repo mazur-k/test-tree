@@ -5,19 +5,19 @@ namespace BlazorApp1.Components
 {
     public class AthenaTreeItemSettings
     {
-        public IEnumerable Data { get; set; }
+        public IEnumerable? Data { get; set; }
 
         //
         // Summary:
         //     Gets or sets the function which returns a value for the RadzenTreeItem.Text
         //     of a child item.
-        public Func<object, string> Text { get; set; }
+        public Func<object, string>? Text { get; set; }
 
         //
         // Summary:
         //     Gets or sets the name of the property which provides the value for the RadzenTreeItem.Text
         //     of a child item.
-        public string TextProperty { get; set; }
+        public string? TextProperty { get; set; }
 
         //
         // Summary:

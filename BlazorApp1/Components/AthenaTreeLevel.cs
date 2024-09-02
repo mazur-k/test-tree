@@ -8,13 +8,13 @@ namespace BlazorApp1.Components
         /// Specifies the name of the property which provides values for the <see cref="AthenaTreeItem.Text" /> property of the child items.
         /// </summary>
         [Parameter]
-        public string TextProperty { get; set; }
+        public string? TextProperty { get; set; }
 
         /// <summary>
         /// Specifies the name of the property which returns child data. The value returned by that property should be IEnumerable
         /// </summary>
         [Parameter]
-        public string ChildrenProperty { get; set; }
+        public string? ChildrenProperty { get; set; }
 
         /// <summary>
         /// Determines if a child item has children or not. Set to <c>value =&gt; true</c> by default.
@@ -58,13 +58,13 @@ namespace BlazorApp1.Components
         /// </code>
         /// </example>
         [Parameter]
-        public Func<object, string> Text { get; set; }
+        public Func<object, string>? Text { get; set; }
 
         /// <summary>
         /// Gets or sets the template.
         /// </summary>
         [Parameter]
-        public RenderFragment<AthenaTreeItem> Template { get; set; }
+        public RenderFragment<AthenaTreeItem>? Template { get; set; }
 
         /// <summary>
         /// The RadzenTree which this item is part of.
