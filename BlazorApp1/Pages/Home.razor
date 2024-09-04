@@ -135,18 +135,27 @@ Welcome to your new app.
         {
             bool isDirectory = ((Item)context.Value).Type.Equals("folder");
 
-            builder.OpenComponent<RadzenIcon>(0);
-
+            // builder.OpenComponent<RadzenIcon>(0);
+            
             if (context.IsLoading)
             {
-                builder.AddAttribute(1, nameof(RadzenIcon.Icon), "hourglass_full");
+                builder.OpenComponent<RadzenProgressBarCircular>(0);
+                builder.AddAttribute(1, nameof(RadzenProgressBarCircular.ProgressBarStyle), ProgressBarStyle.Base);
+                builder.AddAttribute(2, nameof(RadzenProgressBarCircular.Value), 100D);
+                builder.AddAttribute(3, nameof(RadzenProgressBarCircular.ShowValue), false);
+                builder.AddAttribute(4, nameof(RadzenProgressBarCircular.Mode), ProgressBarMode.Indeterminate);
+                builder.AddAttribute(5, nameof(RadzenProgressBarCircular.Size), ProgressBarCircularSize.ExtraSmall);
+                builder.CloseComponent();
+                // builder.AddAttribute(1, nameof(RadzenIcon.Icon), "hourglass_full");
             }
             else
             {
+                builder.OpenComponent<RadzenIcon>(0);
                 builder.AddAttribute(1, nameof(RadzenIcon.Icon), isDirectory ? "folder" : "insert_drive_file");
+                builder.CloseComponent();
             }
 
-            builder.CloseComponent();
+            // builder.CloseComponent();
             builder.AddContent(3, context.Text);
         }
     };
@@ -169,7 +178,6 @@ Welcome to your new app.
             {
                 args.Children.Data = data;
                 args.Children.Template = FileOrFolderTemplate;
-                args.Children.Text = t => "test";
             }
         }
 
