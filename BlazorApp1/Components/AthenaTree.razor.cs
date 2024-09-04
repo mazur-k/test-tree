@@ -108,7 +108,7 @@ namespace BlazorApp1.Components
             }
         }
 
-        void RenderTreeItem(RenderTreeBuilder builder, object data, RenderFragment<AthenaTreeItem> template, Func<object, string> text, Func<object, bool> hasChildren, Func<object, bool> expanded, Func<object, bool> selected, IEnumerable? children = null)
+        void RenderTreeItem(RenderTreeBuilder builder, object data, RenderFragment<AthenaTreeItem>? template, Func<object, string> text, Func<object, bool> hasChildren, Func<object, bool> expanded, Func<object, bool> selected, IEnumerable? children = null)
         {
             builder.OpenComponent<AthenaTreeItem>(0);
             builder.AddAttribute(1, nameof(AthenaTreeItem.Text), text(data));
@@ -240,7 +240,7 @@ namespace BlazorApp1.Components
             }
         }
 
-        Func<object, T> Getter<T>(object data, string property)
+        Func<object, T> Getter<T>(object data, string? property)
         {
             if (string.IsNullOrEmpty(property))
             {

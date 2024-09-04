@@ -1,0 +1,8 @@
+﻿.tree-node {
+    max-width: 200px;
+    text-wrap: wrap;
+    /*overflow: clip;*/
+    height: auto;
+    word-wrap: break-word;
+    overflow-wrap: normal;
+}

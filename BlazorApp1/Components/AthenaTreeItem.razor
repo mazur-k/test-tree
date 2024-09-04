@@ -6,8 +6,8 @@
 @{
     var itemArgs = Tree?.ItemAttributes(this);
 }
-<li class="rz-treenode" @attributes="@(itemArgs.Item1.Attributes.Any() ? itemArgs.Item1.Attributes : Attributes)">
-    <div class=@ContentClassList @onclick="@Select" @ondblclick="@(e => {if (ChildContent != null || HasChildren) Toggle();})" @ondblclick:stopPropagation>
+<li class="rz-treenode" @attributes="@(itemArgs is not null && itemArgs.Item1.Attributes.Any() ? itemArgs.Item1.Attributes : Attributes)">
+    <div class=@ContentClassList @onclick="@Select" @ondblclick="@(async() => {if (ChildContent != null || HasChildren) await Toggle();})" @ondblclick:stopPropagation>
       @*   @if (ChildContent != null || HasChildren)
         {
             <span  @ondblclick="@Toggle" @onclick:stopPropagation></span>

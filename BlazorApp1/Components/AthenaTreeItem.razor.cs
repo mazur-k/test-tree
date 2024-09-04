@@ -16,7 +16,8 @@ namespace BlazorApp1.Components
 
         ClassList ContentClassList => ClassList.Create("rz-treenode-content")
                                                .Add("rz-treenode-content-selected", selected)
-                                               .Add("rz-state-focused", Tree.IsFocused(this));
+                                               .Add("rz-state-focused", Tree is not null && Tree.IsFocused(this))
+                                                .Add("tree-node");
         //ClassList IconClassList => ClassList.Create("rz-tree-toggler rzi")
         //                                       .Add("rzi-caret-down", clientExpanded)
         //                                       .Add("rzi-caret-right", !clientExpanded);
@@ -92,7 +93,8 @@ namespace BlazorApp1.Components
         [Parameter]
         public IEnumerable? Data { get; set; }
 
-        public void StartLoading(bool isLoading) { 
+        public void StartLoading(bool isLoading)
+        {
             IsLoading = isLoading;
         }
 
@@ -236,7 +238,7 @@ namespace BlazorApp1.Components
                 {
                     await Tree.ExpandItem(this);
                 }
-                
+
             }
 
             selected = Selected;
@@ -321,7 +323,7 @@ namespace BlazorApp1.Components
             var children = GetAllChildValues();
             var result = new object?[] { Value };
 
-            if(children is not null)
+            if (children is not null)
             {
                 var concatResult = result.Concat(children);
                 return concatResult;

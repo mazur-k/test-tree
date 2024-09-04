@@ -48,6 +48,6 @@ namespace BlazorApp1.Components
         //
         // Value:
         //     The template.
-        public RenderFragment<AthenaTreeItem> Template { get; set; }
+        public RenderFragment<AthenaTreeItem>? Template { get; set; }
     }
 }

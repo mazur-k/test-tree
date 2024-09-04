@@ -139,7 +139,8 @@ Welcome to your new app.
     {
         if (context.Value is not null)
         {
-            bool isDirectory = ((Item)context.Value).Type.Equals("folder");
+            var item = (Item)context.Value;
+            bool isDirectory = item is not null && item.Type is not null && item.Type.Equals("folder");
 
             // builder.OpenComponent<RadzenIcon>(0);
             
@@ -220,7 +221,7 @@ Welcome to your new app.
             new Item("item1", "folder", new List<Item>()),
             new Item("item2", "file", new List<Item>()),
             new Item("item3", "file", new List<Item>()),
-            new Item("item4", "file", new List<Item>())
+            new Item("item4gsnkmsfgn;sgknmsgmn'sgmns'; nm';sdmnadlnadl'aa af;ldafnb;sdbjnls djnba;ldnkao;nopang opernb;fnfb;alb naba'", "file", new List<Item>())
         };
         // items = new List<Item>
         // {
