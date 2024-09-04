@@ -3,6 +3,7 @@
 @page "/"
 
 @inject IDataService DataService;
+@inject DialogService DialogService;
 @* <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
@@ -110,6 +111,11 @@ Welcome to your new app.
         <AthenaTreeLevel TextProperty="@nameof(Item.Name)" ChildrenProperty="@nameof(Item.Children)" Template=@FileOrFolderTemplate />
     </AthenaTree>
 </RadzenCard>
+
+<div class="rz-p-12 rz-text-align-center">
+    <RadzenButton Text="Test dialog" ButtonStyle="ButtonStyle.Secondary"
+                  Click=@(args => DialogService.Open<Components.Dialog>("Test")) />
+</div>
 
 @code {
     IEnumerable<Item>? items;
