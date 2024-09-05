@@ -1,8 +1,27 @@
 ﻿.tree-node {
     max-width: 200px;
-    text-wrap: wrap;
+    /*text-wrap: wrap;*/
     /*overflow: clip;*/
-    height: auto;
-    word-wrap: break-word;
+    /*height: auto;*/
+    /*word-wrap: break-word;*/
+
     overflow-wrap: normal;
+
+   /* display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;*/
 }
+
+/*.rz-treenode-content .rz-treenode-label {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    align-items: center;
+    cursor: inherit;
+    padding-block: var(--rz-tree-node-padding-block);
+    padding-inline: var(--rz-tree-node-padding-inline);
+}*/
